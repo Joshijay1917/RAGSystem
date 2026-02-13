@@ -1,0 +1,29 @@
+{
+  "name": "ragsystembackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "node --env-file=.env dist/index.js"
+  },
+  "author": "Joshi Jay",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^1.41.0",
+    "@types/multer": "^2.0.0",
+    "axios": "^1.13.5",
+    "compute-cosine-similarity": "^1.1.0",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/mongoose": "^5.11.96",
+    "@types/node": "^25.0.10",
+    "typescript": "^5.9.3"
+  }
+}
