@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 type Chunk = {
     text: string;
-    embeddings: Number[];
+    embedding: Number[];
 }
 
 export interface FileEmbeddingsI {

@@ -59,7 +59,7 @@ export class FileService {
             for (const chunk of doc.chunks) {
                 const score = cosineSimilarity(
                     embeddings,
-                    chunk.embeddings as number[]
+                    chunk.embedding as number[]
                 );
 
                 matches.push({

@@ -45,27 +45,60 @@ export async function chat(query: string): Promise<ChatResult | null> {
     }
 }
 
-export async function runAgent(userPrompt: string) {
+export async function runAgent(userPrompt: string, socket: any) {
+    socket.emit("agent:event", {
+        type: "planning",
+        message: "Thinking..."
+    });
+
     const aiResponse = await chat(userPrompt);
     const act = aiResponse?.action;
     let history = [];
 
-    if(act === 'answer') {
+    if (act === 'answer') {
+        socket.emit("agent:event", {
+            type: "final",
+            message: aiResponse?.response
+        });
+
         console.log(`🤖 Plan: ${aiResponse?.response}`);
         return aiResponse?.response;
     }
 
+    socket.emit("agent:event", {
+        type: "searching",
+        message: `Searching for: ${aiResponse?.query}`
+    });
+
     const args = aiResponse?.query
 
-    if(args) {
-        const result = await tools.searchDB(args)
-        history.push({
-            action: name,
-            response: result
+    if (args) {
+        const r = await tools.searchDB(args)
+
+        socket.emit("agent:event", {
+            type: "results",
+            message: `Found ${r.length} relevant chunks`,
+            data: r
         });
+
+        history.push({
+            action: act,
+            response: r
+        });
+
+        socket.emit("agent:event", {
+            type: "thinking",
+            message: "Generating answer..."
+        });
+
         console.log(`✅ action from ${act} with args ${args}: Success`);
-        runAgent(`{"action": "search", "query": ${result}}`)
+        const context = r.map(r => `From ${r.docName}: ${r.text}`).join("\n\n");
+        runAgent(`{"action": "search", "query": ${context}}`, socket)
     } else {
+        socket.emit("agent:event", {
+            type: "error",
+            message: "Agent failed"
+        });
         console.error(`❌ args ${args} not found.`);
     }
 }

@@ -1,0 +1,27 @@
+Privacy Agent App
+
+The Privacy Agent is a privacy-first AI assistant built using React Native and Node.js. 
+It follows a zero-knowledge architecture where user data stays local unless explicitly shared.
+
+Key Features:
+- Local SQLite storage
+- Optional AI notifications
+- Secure document handling
+- No tracking or analytics
+- User-controlled permissions
+
+The app allows users to store notes, reminders, and personal documents securely. 
+All AI interactions are designed to protect user privacy.
+
+Technology Stack:
+Frontend: React Native
+Backend: Node.js with Express
+Database: MongoDB and local SQLite
+AI: Gemini API
+
+Use Case:
+Students and professionals can upload documents and ask questions. 
+The system retrieves relevant chunks and generates answers using AI.
+
+Goal:
+To build a privacy-first AI workspace where users control their own data.
