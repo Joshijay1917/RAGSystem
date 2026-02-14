@@ -3,6 +3,7 @@ import { ChatContextProvider } from './context/ChatContext'
 import { Routes, Route, Outlet } from 'react-router-dom'
 import Home from './pages/Home'
 import Sidebar from './components/Sidebar'
+import Status from './components/Status'
 
 function AppLayout() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route path='/' element={<Home />} />
+            <Route path='/status' element={<Status />}/>
           </Route>
         </Routes>
       </ChatContextProvider>

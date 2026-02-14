@@ -76,4 +76,9 @@ export class FileService {
         // 5️⃣ return top 3
         return matches.slice(0, 3);
     }
+
+    static async getFiles() {
+        const files = await FileEmbeddings.find({})
+        return files;
+    }
 }

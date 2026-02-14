@@ -30,3 +30,13 @@ export const fileUpload = asyncHandler(async (req, res) => {
             new ApiResponse(200, results, "File Saved!")
         )
 })
+
+export const GetAllFiles = asyncHandler(async (req, res) => {
+    const files = await FileService.getFiles();
+
+    res
+    .status(200)
+    .json(
+        new ApiResponse(200, files, 'Get All Files!')
+    )
+})

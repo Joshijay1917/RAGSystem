@@ -12,13 +12,14 @@ export const ChatContextProvider = ({ children }) => {
     const [query, setQuery] = useState("")
     const aiMsgIndexRef = useRef(null);
     const [messages, setMessages] = useState([
-        { role: "ai", text: "Hello 👋 Ask anything from your documents." },
+        { role: "model", text: "Hello 👋 Ask anything from your documents." },
     ]);
+    const sourceRef = useRef([]);
     const [loading, setLoading] = useState()
     const [error, seterror] = useState()
 
     const askAgent = async () => {
-        const res = await apiHandler(() => askAI(query, getSocketId), setLoading, seterror)
+        const res = await apiHandler(() => askAI(query, getSocketId, messages), setLoading, seterror)
         console.log(res)
         return res.data.data
     }
@@ -41,29 +42,33 @@ export const ChatContextProvider = ({ children }) => {
                 if (idx === null) return prev;
 
                 if (event.type === "planning") {
-                    updated[idx] = { role: "ai", text: "🧠 Thinking..." };
+                    updated[idx] = { role: "model", text: "🧠 Thinking..." };
                 }
 
                 if (event.type === "searching") {
-                    updated[idx] = { role: "ai", text: "🔎 Searching docs..." };
+                    updated[idx] = { role: "model", text: "🔎 Searching docs..." };
                 }
 
                 if (event.type === "results") {
+                    sourceRef.current = event.data;
+                    console.log('Source:', sourceRef.current)
                     updated[idx] = {
-                        role: "ai",
+                        role: "model",
                         text: `📄 Found ${event.data.length} matches`
                     };
                 }
 
                 if (event.type === "final") {
+                    console.log('Final Source:', sourceRef.current)
                     updated[idx] = {
-                        role: "ai",
-                        text: event.message
+                        role: "model",
+                        text: event.message,
+                        sources: sourceRef.current
                     };
+                    sourceRef.current = [];
                 }
 
                 return updated;
-
             })
         });
 

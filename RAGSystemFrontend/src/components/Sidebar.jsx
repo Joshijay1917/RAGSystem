@@ -1,24 +1,31 @@
+import { useNavigate } from 'react-router-dom'
 import Details from '../pages/Details'
+import HomeInfo from './HomeInfo'
+import { useUser } from '../context/UserContext'
+import { useEffect } from 'react'
 
 function Sidebar() {
+    const navigate = useNavigate()
+    const { filesUploaded, file } = useUser()
+
+    useEffect(() => {
+        filesUploaded()
+    }, [])
+    
+
     return (
         <div className="bg-zinc-900 text-white w-1/4 p-6 border border-zinc-800">
+            <button onClick={() => navigate('/status')} className='bg-blue-600 w-full rounded-lg my-2 py-2'>See Status</button>
             <h2 className="text-xl font-semibold mb-4">Uploaded Files</h2>
 
             <div className="space-y-2">
-                {/* Example items */}
-                <div className="bg-zinc-800 px-4 py-2 rounded-lg flex justify-between">
-                    <span>📄 document1.txt</span>
-                    <span className="text-xs text-zinc-400">2 mins ago</span>
-                </div>
-
-                <div className="bg-zinc-800 px-4 py-2 rounded-lg flex justify-between">
-                    <span>📄 notes.txt</span>
-                    <span className="text-xs text-zinc-400">5 mins ago</span>
-                </div>
+                {file && (
+                    <Details file={file}/>
+                )}
             </div>
 
-            <Details />
+
+            <HomeInfo />
         </div>
     )
 }

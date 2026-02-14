@@ -9,17 +9,26 @@ export type ChatResult =
     | { action: "search"; query: string }
     | { action: "answer"; response: string };
 
-export async function chat(query: string): Promise<ChatResult | null> {
+export async function chat(query: string, history: any[]): Promise<ChatResult | null> {
+    const isGemma = true
     try {
-        const result = await genAI.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: [{ role: 'user', parts: [{ text: query }] }],
-            config: {
-                systemInstruction: SYS_PROMPT,
-                temperature: 0.2
-            },
+        const chat = genAI.chats.create({
+            model: 'gemma-3-27b-it',
+            history: history.map((msg, index) => {
+                let content = msg.text;
+                if (isGemma && index === 0) {
+                    content = `INSTRUCTIONS:\n${SYS_PROMPT}\n\nUSER MESSAGE:\n${msg.text}`;
+                }
+                return {
+                    role: msg.role,
+                    parts: [{ text: content }]
+                }
+            })
         })
-        const responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        const res = await chat.sendMessage({
+            message: query
+        });
+        const responseText = res.text || "";
 
         console.log("RAW AI:", responseText);
 
@@ -45,15 +54,15 @@ export async function chat(query: string): Promise<ChatResult | null> {
     }
 }
 
-export async function runAgent(userPrompt: string, socket: any) {
+export async function runAgent(userPrompt: string, socket: any, history: any[]) {
     socket.emit("agent:event", {
         type: "planning",
         message: "Thinking..."
     });
 
-    const aiResponse = await chat(userPrompt);
+    const aiResponse = await chat(userPrompt, history);
     const act = aiResponse?.action;
-    let history = [];
+    // let history = [];
 
     if (act === 'answer') {
         socket.emit("agent:event", {
@@ -82,8 +91,11 @@ export async function runAgent(userPrompt: string, socket: any) {
         });
 
         history.push({
-            action: act,
-            response: r
+            role: "model",
+            text: JSON.stringify({
+                action: "search_results",
+                data: r
+            })
         });
 
         socket.emit("agent:event", {
@@ -93,7 +105,7 @@ export async function runAgent(userPrompt: string, socket: any) {
 
         console.log(`✅ action from ${act} with args ${args}: Success`);
         const context = r.map(r => `From ${r.docName}: ${r.text}`).join("\n\n");
-        runAgent(`{"action": "search", "query": ${context}}`, socket)
+        runAgent(`{"action": "search", "query": ${context}}`, socket, history)
     } else {
         socket.emit("agent:event", {
             type: "error",

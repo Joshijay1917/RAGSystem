@@ -15,7 +15,7 @@ export default function Home() {
 
         setMessages((prev) => [
             ...prev,
-            { role: "ai", text: `Uploaded ${selected.length} file(s)` },
+            { role: "model", text: `Uploaded ${selected.length} file(s)` },
         ]);
     }
 
@@ -26,7 +26,7 @@ export default function Home() {
             const newMsgs = [
                 ...prev,
                 { role: "user", text: query },
-                { role: "ai", text: "🧠 Thinking..." }
+                { role: "model", text: "🧠 Thinking..." }
             ];
 
             aiMsgIndexRef.current = newMsgs.length - 1;
@@ -40,7 +40,7 @@ export default function Home() {
         setMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = {
-                role: "ai",
+                role: "model",
                 text: res || "No response",
             };
             return updated;
@@ -65,9 +65,30 @@ export default function Home() {
                 <div className="w-full max-w-3xl space-y-4">
                     {messages.map((m, i) => (
                         <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                            <div className={`max-w-[70%] px-4 py-3 rounded-2xl text-sm ${m.role === "user"
-                                ? "bg-indigo-600 text-white rounded-br-md"
-                                : "bg-zinc-800 text-zinc-200 rounded-bl-md"}`}>{m.text}</div>
+                            <div className="max-w-[70%]">
+                                <div className={`px-4 py-3 rounded-2xl text-sm ${m.role === "user"
+                                    ? "bg-indigo-600 text-white"
+                                    : "bg-zinc-800 text-zinc-200"
+                                    }`}>
+                                    {m.text}
+                                </div>
+
+                                {m.sources && (
+                                    <div className="mt-2 space-y-2">
+                                        {m.sources.map((s, idx) => (
+                                            <div key={idx} className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-xs">
+                                                <div className="text-indigo-400 mb-1">
+                                                    📄 {s.docName} (score: {s.score.toFixed(2)})
+                                                </div>
+                                                <div className="text-zinc-300">
+                                                    {s.text.slice(0, 200)}...
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                            </div>
                         </div>
                     ))}
                     {/* Title */}
