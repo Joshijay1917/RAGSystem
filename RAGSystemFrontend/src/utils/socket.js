@@ -1,3 +1,5 @@
 import { io } from 'socket.io-client'
 
-export const socket = io('http://localhost:3000')
+const url = import.meta.VITE_BACKEND_URL || 'http://localhost:3000/api'
+
+export const socket = io(url)
