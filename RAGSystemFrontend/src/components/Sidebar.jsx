@@ -23,8 +23,7 @@ function Sidebar() {
                     <Details file={file}/>
                 )}
             </div>
-
-
+            
             <HomeInfo />
         </div>
     )

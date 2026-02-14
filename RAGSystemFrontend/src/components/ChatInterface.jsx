@@ -29,13 +29,12 @@ export default function ChatInterface() {
                             }`}
                     >
                         <div
-                            className={`
-                max-w-[70%] px-4 py-3 rounded-2xl text-sm
-                ${msg.role === "user"
-                                    ? "bg-indigo-600 text-white rounded-br-md"
-                                    : "bg-zinc-800 text-zinc-200 rounded-bl-md"
-                                }
-              `}
+                            className={` max-w-[70%] px-4 py-3 rounded-2xl text-sm
+                                        ${msg.role === "user"
+                                                    ? "bg-indigo-600 text-white rounded-br-md"
+                                                    : "bg-zinc-800 text-zinc-200 rounded-bl-md"
+                                        }
+                                    `}
                         >
                             {msg.text}
                         </div>

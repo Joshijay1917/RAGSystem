@@ -4,7 +4,9 @@ AI tools used:
 - ChatGPT
 - Antigravity
 
-Used for:
+Used ChatGPT and Antigravity for:
+- socket architecture
+- RAG pipeline
 - Boilerplate code
 - Socket.io patterns
 - Gemini integration
@@ -19,7 +21,7 @@ Checked manually:
 - Error handling
 
 LLM Provider:
-Gemma 3 27b
+Gemma 3 27b Using Gemini API
 
 Why:
 - Fast

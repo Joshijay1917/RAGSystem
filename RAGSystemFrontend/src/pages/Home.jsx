@@ -91,10 +91,6 @@ export default function Home() {
                             </div>
                         </div>
                     ))}
-                    {/* Title */}
-                    {/* <h2 className="text-xl text-center font-semibold">
-                        Ask anything from your documents
-                    </h2> */}
 
                     {/* Input Box */}
                     <div className="border-t border-zinc-800 p-4 bg-zinc-950 flex justify-center">
