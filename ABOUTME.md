@@ -13,8 +13,10 @@ Role: MERN Developer
 - Node.js
 - MongoDB
 - React
+- NestJs
+- NextJs
 - RAG systems
 - Socket.io
 
 ## Resume
-(attach resume pdf here)
+[Download Resume](./myresume.pdf)

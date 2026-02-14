@@ -13,14 +13,15 @@ Used for:
 Checked manually:
 - Embedding storage logic
 - Agent recursion
+- Context Managemnet
 - Cosine similarity search
 - MongoDB schema
 - Error handling
 
 LLM Provider:
-Gemini 2.5 Flash
+Gemma 3 27b
 
 Why:
 - Fast
 - Cheap
-- Good for agent loops
+- Good for thinking

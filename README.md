@@ -1,4 +1,6 @@
-# Private Knowledge Q&A
+# ChatAI
+
+**Visit Now:** **https://my-ragsystem-app.vercel.app**
 
 A mini RAG workspace where users upload documents and ask questions.
 
@@ -17,18 +19,15 @@ A mini RAG workspace where users upload documents and ask questions.
 - Gemini API
 - Socket.io
 
-## Run locally
+## Deplyoed
 
 ### Backend
-npm install  
-npm run dev  
+Deploy on render
+Url: https://ragsystem-5q0v.onrender.com
 
 ### Frontend
-npm install  
-npm run dev  
-
-## Env
-See `.env.example`
+Deploy on vercel 
+Url: https://my-ragsystem-app.vercel.app
 
 ## Done
 - File upload
