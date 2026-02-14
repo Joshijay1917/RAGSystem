@@ -19,4 +19,4 @@ Role: MERN Developer
 - Socket.io
 
 ## Resume
-[Download Resume](./myresume.pdf)
+[Download Resume](./Resume/Jay%20Joshi.pdf)
